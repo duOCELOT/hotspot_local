@@ -1,0 +1,103 @@
+/* ====== Common Styles (Admin + Guest) ====== */
+:root {
+  --primary-color: #3498db;
+  --primary-dark: #1e1e2f;
+  --primary-light: #f9f9fb;
+
+  --bg-overlay-dark: rgba(0,0,0,0.6);
+  --bg-overlay-light: rgba(255,255,255,0.6);
+
+  --text-dark: #f0f0f0;
+  --text-light: #2c3e50;
+
+  --card-bg-dark: rgba(255,255,255,0.05);
+  --card-bg-light: rgba(0,0,0,0.05);
+}
+
+/* ====== Base ====== */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: url('../images/bg-hotel.jpg') no-repeat center center fixed;
+  background-size: cover;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-dark);
+}
+
+/* Overlay (escuro por padrão) */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: var(--bg-overlay-dark);
+  backdrop-filter: blur(6px);
+  z-index: -1;
+}
+
+/* Containers (login e dashboard) */
+.container, .dashboard {
+  background: var(--card-bg-dark);
+  border-radius: 20px;
+  padding: 40px;
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+}
+
+/* ====== Light Theme ====== */
+body.light {
+  color: var(--text-light);
+}
+body.light::before {
+  background: var(--bg-overlay-light);
+}
+body.light .container, 
+body.light .dashboard {
+  background: var(--card-bg-light);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+/* ====== Buttons ====== */
+button, .login-btn, .logout-btn, .theme-toggle {
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  padding: 10px 20px;
+  transition: all 0.3s ease;
+}
+
+.login-btn, .logout-btn {
+  background: var(--primary-color);
+  color: #fff;
+}
+.login-btn:hover, .logout-btn:hover {
+  filter: brightness(1.1);
+}
+
+.theme-toggle {
+  background: transparent;
+  color: inherit;
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+/* ====== Inputs ====== */
+.input-group {
+  margin-bottom: 20px;
+}
+.input-field {
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  border: 2px solid #ccc;
+  font-size: 16px;
+}
+.input-field:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
