@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resort Fazenda 3 Pinheiros - Painel Administrativo</title>
+    <link rel="stylesheet" href="css/admin-desktop.css">
+</head>
+<body>
+
+<!-- Login Screen -->
+<div class="container" id="loginScreen">
+    <div class="login-card">
+        <div class="logo">
+            <img src="images/3pin.png" alt="Resort Fazenda 3 Pinheiros" class="logo-image">
+        </div>
+
+        <h1>Painel Administrativo</h1>
+        <p class="subtitle">Sistema de Gerenciamento Wi-Fi</p>
+
+        <div class="login-form">
+            <div class="access-selector">
+                <button class="access-btn active" onclick="selectAccess('administrator')" data-type="administrator">
+                    🛠️ Administrador
+                </button>
+                <button class="access-btn" onclick="selectAccess('receptionist')" data-type="receptionist">
+                    🏨 Recepcionista
+                </button>
+            </div>
+
+            <div class="input-group">
+                <label for="username">Usuário</label>
+                <input type="text" class="input-field" id="username" placeholder="Digite seu usuário">
+            </div>
+            
+            <div class="input-group">
+                <label for="password">Senha</label>
+                <input type="password" class="input-field" id="password" placeholder="Digite sua senha">
+            </div>
+
+            <button class="login-btn" onclick="signIn()">
+                <span class="btn-icon">🔐</span>
+                Entrar no Sistema
+            </button>
+        </div>
+
+        <div class="login-info">
+            <p><strong>Credenciais de Teste:</strong></p>
+            <p>Admin: admin / admin123</p>
+            <p>Recepção: recepcao01 / recep123</p>
+        </div>
+    </div>
+</div>
+
+<!-- Administrator Dashboard -->
+<div class="dashboard" id="administratorDashboard">
+    <header class="dashboard-header">
+        <div class="header-left">
+            <img src="images/3pin.png" alt="3 Pinheiros" class="header-logo">
+            <div class="header-info">
+                <h1>Painel Administrativo</h1>
+                <p>Sistema Wi-Fi Resort</p>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="user-info">
+                <div class="user-details">
+                    <span class="user-name" id="adminUserName">admin</span>
+                    <span class="user-role">Administrador</span>
+                </div>
+                <button class="logout-btn" onclick="logout()">Sair</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="dashboard-content">
+        <div class="stats-overview">
+            <div class="stat-card">
+                <div class="stat-icon">👥</div>
+                <div class="stat-info">
+                    <div class="stat-number">156</div>
+                    <div class="stat-label">Usuários Conectados</div>
+                </div>
+                <div class="stat-trend positive">+12%</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📡</div>
+                <div class="stat-info">
+                    <div class="stat-number">78%</div>
+                    <div class="stat-label">Ocupação da Rede</div>
+                </div>
+                <div class="stat-trend neutral">--</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🌐</div>
+                <div class="stat-info">
+                    <div class="stat-number">23</div>
+                    <div class="stat-label">APs Ativos</div>
+                </div>
+                <div class="stat-trend positive">+2</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-info">
+                    <div class="stat-number">2.8GB</div>
+                    <div class="stat-label">Tráfego Hoje</div>
+                </div>
+                <div class="stat-trend positive">+15%</div>
+            </div>
+        </div>
+
+        <div class="main-grid">
+            <div class="panel">
+                <div class="panel-header">
+                    <h3>🔧 Gerenciamento do Sistema</h3>
+                </div>
+                <div class="panel-content">
+                    <div class="control-grid">
+                        <button class="control-btn" onclick="manageUsers()">
+                            <div class="control-icon">👥</div>
+                            <div class="control-label">Gerenciar Usuários</div>
+                        </button>
+                        <button class="control-btn" onclick="configureNetwork()">
+                            <div class="control-icon">🌐</div>
+                            <div class="control-label">Configurar Rede</div>
+                        </button>
+                        <button class="control-btn" onclick="viewLogs()">
+                            <div class="control-icon">📋</div>
+                            <div class="control-label">Logs do Sistema</div>
+                        </button>
+                        <button class="control-btn" onclick="systemSettings()">
+                            <div class="control-icon">⚙️</div>
+                            <div class="control-label">Configurações</div>
+                        </button>
+                        <button class="control-btn" onclick="manageVLANs()">
+                            <div class="control-icon">🔗</div>
+                            <div class="control-label">Gerenciar VLANs</div>
+                        </button>
+                        <button class="control-btn" onclick="backupSystem()">
+                            <div class="control-icon">💾</div>
+                            <div class="control-label">Backup</div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">
+                    <h3>📈 Atividade Recente</h3>
+                    <button class="refresh-btn" onclick="refreshActivity()">🔄</button>
+                </div>
+                <div class="panel-content">
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-icon success">✅</div>
+                            <div class="activity-details">
+                                <div class="activity-description">Novo hóspede conectado - Quarto 205</div>
+                                <div class="activity-time">há 5 minutos</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon warning">⚠️</div>
+                            <div class="activity-details">
+                                <div class="activity-description">AP-03 reiniciado automaticamente</div>
+                                <div class="activity-time">há 12 minutos</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon info">ℹ️</div>
+                            <div class="activity-details">
+                                <div class="activity-description">Evento finalizado - 45 usuários desconectados</div>
+                                <div class="activity-time">há 1 hora</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon success">✅</div>
+                            <div class="activity-details">
+                                <div class="activity-description">Backup automático concluído</div>
+                                <div class="activity-time">há 2 horas</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-grid">
+            <div class="panel wide">
+                <div class="panel-header">
+                    <h3>🌐 Status dos Access Points</h3>
+                    <div class="panel-actions">
+                        <select class="filter-select">
+                            <option>Todos os APs</option>
+                            <option>Online</option>
+                            <option>Offline</option>
+                            <option>Manutenção</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="panel-content">
+                    <div class="ap-grid">
+                        <div class="ap-card online">
+                            <div class="ap-status"></div>
+                            <div class="ap-info">
+                                <div class="ap-name">AP-01 - Recepção</div>
+                                <div class="ap-details">23 usuários • 45 Mbps</div>
+                            </div>
+                        </div>
+                        <div class="ap-card online">
+                            <div class="ap-status"></div>
+                            <div class="ap-info">
+                                <div class="ap-name">AP-02 - Piscina</div>
+                                <div class="ap-details">31 usuários • 38 Mbps</div>
+                            </div>
+                        </div>
+                        <div class="ap-card warning">
+                            <div class="ap-status"></div>
+                            <div class="ap-info">
+                                <div class="ap-name">AP-03 - Restaurante</div>
+                                <div class="ap-details">18 usuários • 22 Mbps</div>
+                            </div>
+                        </div>
+                        <div class="ap-card online">
+                            <div class="ap-status"></div>
+                            <div class="ap-info">
+                                <div class="ap-name">AP-04 - Apartamentos A</div>
+                                <div class="ap-details">42 usuários • 52 Mbps</div>
+                            </div>
+                        </div>
+                        <div class="ap-card online">
+                            <div class="ap-status"></div>
+                            <div class="ap-info">
+                                <div class="ap-name">AP-05 - Apartamentos B</div>
+                                <div class="ap-details">38 usuários • 48 Mbps</div>
+                            </div>
+                        </div>
+                        <div class="ap-card offline">
+                            <div class="ap-status"></div>
+                            <div class="ap-info">
+                                <div class="ap-name">AP-06 - Área Externa</div>
+                                <div class="ap-details">Offline • Manutenção</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Receptionist Dashboard -->
+<div class="dashboard" id="receptionistDashboard">
+    <header class="dashboard-header">
+        <div class="header-left">
+            <img src="images/3pin.png" alt="3 Pinheiros" class="header-logo">
+            <div class="header-info">
+                <h1>Painel da Recepção</h1>
+                <p>Gerenciamento de Hóspedes</p>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="user-info">
+                <div class="user-details">
+                    <span class="user-name" id="receptionUserName">recepcao01</span>
+                    <span class="user-role">Recepcionista</span>
+                </div>
+                <button class="logout-btn" onclick="logout()">Sair</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="dashboard-content">
+        <div class="stats-overview">
+            <div class="stat-card">
+                <div class="stat-icon">🛏️</div>
+                <div class="stat-info">
+                    <div class="stat-number">67</div>
+                    <div class="stat-label">Hóspedes Online</div>
+                </div>
+                <div class="stat-trend positive">+5</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🎫</div>
+                <div class="stat-info">
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">Visitantes Temporários</div>
+                </div>
+                <div class="stat-trend neutral">--</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📋</div>
+                <div class="stat-info">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Solicitações Pendentes</div>
+                </div>
+                <div class="stat-trend negative">+1</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-info">
+                    <div class="stat-number">28</div>
+                    <div class="stat-label">Check-ins Hoje</div>
+                </div>
+                <div class="stat-trend positive">+8</div>
+            </div>
+        </div>
+
+        <div class="main-grid">
+            <div class="panel">
+                <div class="panel-header">
+                    <h3>➕ Criar Novos Acessos</h3>
+                </div>
+                <div class="panel-content">
+                    <div class="creation-forms">
+                        <div class="form-section">
+                            <h4>🛏️ Acesso para Hóspede</h4>
+                            <div class="form-row">
+                                <input type="text" class="input-field" placeholder="Número do Quarto" id="newGuestRoom">
+                                <input type="text" class="input-field" placeholder="Nome do Hóspede" id="newGuestName">
+                            </div>
+                            <button class="create-btn" onclick="createGuestAccess()">Criar Acesso</button>
+                        </div>
+                        
+                        <div class="form-section">
+                            <h4>🎫 Acesso para Visitante</h4>
+                            <div class="form-row">
+                                <input type="text" class="input-field" placeholder="Nome do Visitante" id="newVisitorName">
+                                <select class="input-field" id="visitorDuration">
+                                    <option value="2">2 horas</option>
+                                    <option value="4">4 horas</option>
+                                    <option value="8">8 horas</option>
+                                    <option value="24">1 dia</option>
+                                </select>
+                            </div>
+                            <button class="create-btn" onclick="createVisitorAccess()">Gerar QR Code</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">
+                    <h3>🔧 Solicitações de Suporte</h3>
+                    <span class="notification-badge">3</span>
+                </div>
+                <div class="panel-content">
+                    <div class="support-list">
+                        <div class="support-item urgent">
+                            <div class="support-icon">🔴</div>
+                            <div class="support-details">
+                                <div class="support-room">Quarto 108</div>
+                                <div class="support-issue">Sem conexão Wi-Fi</div>
+                                <div class="support-time">há 15 minutos</div>
+                            </div>
+                            <button class="resolve-btn" onclick="resolveIssue(108)">Resolver</button>
+                        </div>
+                        <div class="support-item normal">
+                            <div class="support-icon">🟡</div>
+                            <div class="support-details">
+                                <div class="support-room">Quarto 205</div>
+                                <div class="support-issue">Conexão lenta</div>
+                                <div class="support-time">há 32 minutos</div>
+                            </div>
+                            <button class="resolve-btn" onclick="resolveIssue(205)">Resolver</button>
+                        </div>
+                        <div class="support-item normal">
+                            <div class="support-icon">🟡</div>
+                            <div class="support-details">
+                                <div class="support-room">Restaurante</div>
+                                <div class="support-issue">Muitos usuários conectados</div>
+                                <div class="support-time">há 1 hora</div>
+                            </div>
+                            <button class="resolve-btn" onclick="resolveIssue('restaurant')">Resolver</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="js/admin-desktop.js"></script>
+</body>
+</html>

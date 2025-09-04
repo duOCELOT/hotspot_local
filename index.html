@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema Completo Wi-Fi Hotel - 80 Apartamentos</title>
+<style>
+    body { 
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+        margin: 0; 
+        padding: 20px; 
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+    }
+    
+    .header { 
+        background: rgba(255,255,255,0.95); 
+        padding: 20px; 
+        border-radius: 15px; 
+        text-align: center; 
+        margin-bottom: 30px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+    
+    .header h1 { 
+        margin: 0; 
+        color: #2c3e50; 
+        font-size: 2.2em; 
+        font-weight: 600;
+    }
+    
+    .subtitle {
+        color: #7f8c8d;
+        font-size: 1.1em;
+        margin-top: 5px;
+    }
+    
+    .section { 
+        background: rgba(255,255,255,0.95); 
+        margin: 20px 0; 
+        padding: 25px; 
+        border-radius: 15px; 
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        backdrop-filter: blur(10px);
+    }
+    
+    h2 { 
+        color: #2c3e50; 
+        margin-top: 0; 
+        font-size: 1.5em;
+        border-bottom: 3px solid #3498db;
+        padding-bottom: 10px;
+    }
+    
+    .system-diagram { 
+        text-align: center; 
+        margin: 30px 0; 
+    }
+    
+    .role-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        margin: 20px 0;
+    }
+    
+    .role-card {
+        background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+        border-radius: 12px;
+        padding: 20px;
+        border-left: 5px solid;
+        transition: transform 0.3s ease;
+    }
+    
+    .role-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+    
+    .role-card.admin { border-color: #e74c3c; }
+    .role-card.host { border-color: #f39c12; }
+    .role-card.guest { border-color: #9b59b6; }
+    .role-card.staff { border-color: #1abc9c; }
+    .role-card.temp { border-color: #95a5a6; }
+    
+    .role-title {
+        font-weight: bold;
+        font-size: 1.2em;
+        margin-bottom: 10px;
+        color: #2c3e50;
+    }
+    
+    .vlan-badge {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        color: white;
+        font-size: 0.9em;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    
+    .vlan-10 { background: #9b59b6; }
+    .vlan-20 { background: #1abc9c; }
+    .vlan-30 { background: #f39c12; }
+    
+    table { 
+        width: 100%; 
+        border-collapse: collapse; 
+        margin: 15px 0;
+        background: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    th, td { 
+        border: none;
+        padding: 12px; 
+        text-align: left; 
+    }
+    
+    th { 
+        background: linear-gradient(135deg, #3498db, #2980b9);
+        color: white;
+        font-weight: 600;
+    }
+    
+    tr:nth-child(even) {
+        background: #f8f9fa;
+    }
+    
+    .workflow-step {
+        background: linear-gradient(135deg, #74b9ff, #0984e3);
+        color: white;
+        padding: 15px 20px;
+        margin: 10px 0;
+        border-radius: 10px;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .workflow-step::before {
+        content: attr(data-step);
+        position: absolute;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 2em;
+        font-weight: bold;
+        opacity: 0.3;
+    }
+    
+    .workflow-content {
+        margin-left: 50px;
+    }
+    
+    .apartments-grid {
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        gap: 5px;
+        margin: 20px 0;
+        max-width: 800px;
+        margin: 20px auto;
+    }
+    
+    .apartment {
+        aspect-ratio: 1;
+        background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 0.8em;
+        font-weight: bold;
+        transition: transform 0.3s ease;
+    }
+    
+    .apartment:hover {
+        transform: scale(1.1);
+        z-index: 10;
+    }
+    
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin: 20px 0;
+    }
+    
+    .stat-card {
+        background: linear-gradient(135deg, #00b894, #00a085);
+        color: white;
+        padding: 20px;
+        border-radius: 12px;
+        text-align: center;
+    }
+    
+    .stat-number {
+        font-size: 2.5em;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+    
+    .stat-label {
+        font-size: 0.9em;
+        opacity: 0.9;
+    }
+
+    .lang-switch {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background 0.3s ease;
+    }
+
+    .lang-switch:hover {
+        background: #2980b9;
+    }
+</style>
+</head>
+<body>
+
+<button class="lang-switch" onclick="toggleLanguage()">🇺🇸 English</button>
+
+<div class="header">
+    <h1>🏨 Arquitetura Completa do Sistema Wi-Fi do Hotel</h1>
+    <div class="subtitle">Hierarquia de Acesso Multi-Nível para Hotel de 80 Apartamentos</div>
+</div>
+
+<div class="section">
+    <h2>🏗️ Visão Geral do Sistema</h2>
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-number">80</div>
+            <div class="stat-label">Apartamentos</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">3</div>
+            <div class="stat-label">VLANs</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">5</div>
+            <div class="stat-label">Tipos de Usuários</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">240</div>
+            <div class="stat-label">Máx. Dispositivos Hóspedes</div>
+        </div>
+    </div>
+    
+    <div class="apartments-grid">
+        <!-- Generate 80 apartments -->
+        <script>
+            for(let i = 1; i <= 80; i++) {
+                document.write(`<div class="apartment" title="Apartamento ${i}">${i}</div>`);
+            }
+        </script>
+    </div>
+</div>
+
+<div class="section">
+    <h2>👥 Funções de Usuário Multi-Nível</h2>
+    <div class="role-grid">
+        <div class="role-card admin">
+            <div class="role-title">🛠️ Administrador Geral</div>
+            <div class="vlan-badge vlan-30">VLAN 30 - Admin</div>
+            <div><strong>Acesso:</strong> Controle total do sistema</div>
+            <div><strong>Permissões:</strong> Criar/atualizar/excluir todas as contas, gerenciar VLANs, APs, acesso backend, visualizar todos os logs</div>
+        </div>
+        
+        <div class="role-card host">
+            <div class="role-title">🏨 Hosts do Hotel</div>
+            <div class="vlan-badge vlan-30">VLAN 30 - Admin</div>
+            <div><strong>Acesso:</strong> Gerenciamento diário de hóspedes</div>
+            <div><strong>Permissões:</strong> Criar contas de hóspedes/funcionários, gerar códigos QR, visualizar logs de sessões ativas</div>
+        </div>
+        
+        <div class="role-card guest">
+            <div class="role-title">🛏️ Hóspedes</div>
+            <div class="vlan-badge vlan-10">VLAN 10 - Hóspedes</div>
+            <div><strong>Acesso:</strong> Wi-Fi do apartamento</div>
+            <div><strong>Limites:</strong> Máx. 3 dispositivos, expira automaticamente no checkout</div>
+        </div>
+        
+        <div class="role-card staff">
+            <div class="role-title">👔 Funcionários/Corporativo</div>
+            <div class="vlan-badge vlan-20">VLAN 20 - Funcionários</div>
+            <div><strong>Acesso:</strong> Operações internas</div>
+            <div><strong>Recursos:</strong> Login permanente ou temporário, limites de banda opcionais</div>
+        </div>
+        
+        <div class="role-card temp">
+            <div class="role-title">⏱️ Acesso Temporário/Gratuito</div>
+            <div class="vlan-badge vlan-20">VLAN 20 - Funcionários</div>
+            <div><strong>Acesso:</strong> Internet de curta duração</div>
+            <div><strong>Recursos:</strong> Login via código QR, expira automaticamente, gerado pelo host</div>
+        </div>
+    </div>
+</div>
+
+<div class="section">
+    <h2>🌐 Arquitetura de Rede</h2>
+    <div class="system-diagram">
+        <svg viewBox="0 0 1000 700" style="width: 100%; max-width: 1000px; height: auto;">
+            <!-- Internet -->
+            <circle cx="500" cy="50" r="30" fill="#e74c3c"/>
+            <text x="500" y="55" text-anchor="middle" fill="white" font-weight="bold">Internet</text>
+            
+            <!-- Backend Server -->
+            <rect x="400" y="120" width="200" height="50" fill="#3498db" rx="10"/>
+            <text x="500" y="150" text-anchor="middle" fill="white" font-weight="bold">Servidor Backend + API Desbravador</text>
+            
+            <!-- Central MikroTik Router -->
+            <rect x="400" y="200" width="200" height="50" fill="#e67e22" rx="10"/>
+            <text x="500" y="230" text-anchor="middle" fill="white" font-weight="bold">Roteador Central MikroTik</text>
+            
+            <!-- VLAN Switches -->
+            <rect x="100" y="300" width="200" height="50" fill="#9b59b6" rx="10"/>
+            <text x="200" y="330" text-anchor="middle" fill="white" font-weight="bold">VLAN 10 - Hóspedes</text>
+            
+            <rect x="400" y="300" width="200" height="50" fill="#1abc9c" rx="10"/>
+            <text x="500" y="330" text-anchor="middle" fill="white" font-weight="bold">VLAN 20 - Funcionários/Corporativo</text>
+            
+            <rect x="700" y="300" width="200" height="50" fill="#f39c12" rx="10"/>
+            <text x="800" y="330" text-anchor="middle" fill="white" font-weight="bold">VLAN 30 - Admin/Hosts</text>
+            
+            <!-- Access Points -->
+            <circle cx="150" cy="450" r="25" fill="#34495e"/>
+            <text x="150" y="455" text-anchor="middle" fill="white" font-size="10">AP1</text>
+            <circle cx="250" cy="450" r="25" fill="#34495e"/>
+            <text x="250" y="455" text-anchor="middle" fill="white" font-size="10">AP2</text>
+            <circle cx="450" cy="450" r="25" fill="#34495e"/>
+            <text x="450" y="455" text-anchor="middle" fill="white" font-size="10">AP3</text>
+            <circle cx="550" cy="450" r="25" fill="#34495e"/>
+            <text x="550" y="455" text-anchor="middle" fill="white" font-size="10">AP4</text>
+            <circle cx="750" cy="450" r="25" fill="#34495e"/>
+            <text x="750" y="455" text-anchor="middle" fill="white" font-size="10">AP5</text>
+            <circle cx="850" cy="450" r="25" fill="#34495e"/>
+            <text x="850" y="455" text-anchor="middle" fill="white" font-size="10">AP6</text>
+            
+            <!-- Apartment Groups -->
+            <rect x="50" y="550" width="300" height="60" fill="#8e44ad" rx="10" opacity="0.7"/>
+            <text x="200" y="585" text-anchor="middle" fill="white" font-weight="bold">Apartamentos 1-40 (VLAN Hóspedes)</text>
+            
+            <rect x="650" y="550" width="300" height="60" fill="#8e44ad" rx="10" opacity="0.7"/>
+            <text x="800" y="585" text-anchor="middle" fill="white" font-weight="bold">Apartamentos 41-80 (VLAN Hóspedes)</text>
+            
+            <!-- Connection lines -->
+            <line x1="500" y1="80" x2="500" y2="120" stroke="#333" stroke-width="3"/>
+            <line x1="500" y1="170" x2="500" y2="200" stroke="#333" stroke-width="3"/>
+            <line x1="500" y1="250" x2="200" y2="300" stroke="#333" stroke-width="3"/>
+            <line x1="500" y1="250" x2="500" y2="300" stroke="#333" stroke-width="3"/>
+            <line x1="500" y1="250" x2="800" y2="300" stroke="#333" stroke-width="3"/>
+            
+            <!-- AP connections -->
+            <line x1="200" y1="350" x2="150" y2="425" stroke="#333" stroke-width="2"/>
+            <line x1="200" y1="350" x2="250" y2="425" stroke="#333" stroke-width="2"/>
+            <line x1="500" y1="350" x2="450" y2="425" stroke="#333" stroke-width="2"/>
+            <line x1="500" y1="350" x2="550" y2="425" stroke="#333" stroke-width="2"/>
+            <line x1="800" y1="350" x2="750" y2="425" stroke="#333" stroke-width="2"/>
+            <line x1="800" y1="350" x2="850" y2="425" stroke="#333" stroke-width="2"/>
+            
+            <!-- Apartment connections -->
+            <line x1="200" y1="475" x2="200" y2="550" stroke="#333" stroke-width="2" stroke-dasharray="5,5"/>
+            <line x1="800" y1="475" x2="800" y2="550" stroke="#333" stroke-width="2" stroke-dasharray="5,5"/>
+        </svg>
+    </div>
+</div>
+
+<div class="section">
+    <h2>📊 Mapeamento de VLAN & Rede</h2>
+    <table>
+        <tr>
+            <th>VLAN</th>
+            <th>SSID / Rede</th>
+            <th>Usuários</th>
+            <th>Limites de Dispositivos</th>
+            <th>Controle de Acesso</th>
+        </tr>
+        <tr>
+            <td><span class="vlan-badge vlan-10">VLAN 10</span></td>
+            <td>Wi-Fi de Hóspedes</td>
+            <td>80 Apartamentos (máx. 240 dispositivos)</td>
+            <td>3 dispositivos por apartamento</td>
+            <td>Login obrigatório, expira automaticamente no checkout</td>
+        </tr>
+        <tr>
+            <td><span class="vlan-badge vlan-20">VLAN 20</span></td>
+            <td>Wi-Fi Funcionários/Corporativo</td>
+            <td>Funcionários do Hotel + Visitantes Corporativos</td>
+            <td>Configurável por conta</td>
+            <td>Credenciais temporárias/permanentes, códigos QR</td>
+        </tr>
+        <tr>
+            <td><span class="vlan-badge vlan-30">VLAN 30</span></td>
+            <td>Rede Admin/Host</td>
+            <td>Administrador Geral + Hosts do Hotel</td>
+            <td>Ilimitado</td>
+            <td>Acesso backend, gerenciamento de usuários, logs</td>
+        </tr>
+    </table>
+</div>
+
+<div class="section">
+    <h2>🔄 Exemplos de Fluxo de Trabalho</h2>
+    
+    <div class="workflow-step" data-step="1">
+        <div class="workflow-content">
+            <strong>Processo de Check-in do Hóspede</strong><br>
+            Hóspede faz check-in → API Desbravador fornece credenciais do apartamento → Backend cria conta hotspot automaticamente → Hóspede faz login (máx. 3 dispositivos) → Conta expira no checkout
+        </div>
+    </div>
+    
+    <div class="workflow-step" data-step="2">
+        <div class="workflow-content">
+            <strong>Criação de Conta de Funcionário</strong><br>
+            Host do Hotel faz login → Cria conta de funcionário/temporária → Código QR gerado → Funcionário escaneia QR → Acesso concedido à VLAN de Funcionários
+        </div>
+    </div>
+    
+    <div class="workflow-step" data-step="3">
+        <div class="workflow-content">
+            <strong>Acesso para Visitante Corporativo</strong><br>
+            Visitante corporativo chega → Host cria conta temporária → Código QR fornecido → Expira automaticamente após tempo definido → Separado da rede de hóspedes
+        </div>
+    </div>
+    
+    <div class="workflow-step" data-step="4">
+        <div class="workflow-content">
+            <strong>Administração do Sistema</strong><br>
+            Administrador Geral acessa → Gerencia todas VLANs e contas → Visualiza logs abrangentes → Configura APs e configurações de rede → Substitui quaisquer limites
+        </div>
+    </div>
+</div>
+
+<div class="section">
+    <h2>🔐 Benefícios de Segurança & Acesso</h2>
+    <div class="role-grid">
+        <div class="role-card admin">
+            <div class="role-title">🛡️ Segmentação de Rede</div>
+            <div>Isolamento completo entre redes de hóspedes, funcionários e admin previne acesso não autorizado e vazamento de dados.</div>
+        </div>
+        
+        <div class="role-card host">
+            <div class="role-title">👨‍💼 Acesso Baseado em Função</div>
+            <div>Hierarquia clara garante que usuários só acessem o que precisam, reduzindo riscos de segurança e complexidade operacional.</div>
+        </div>
+        
+        <div class="role-card guest">
+            <div class="role-title">⏰ Ciclo de Vida Automatizado</div>
+            <div>Contas de hóspedes expiram automaticamente no checkout, contas de funcionários são limitadas por tempo, prevenindo acesso não autorizado de longo prazo.</div>
+        </div>
+        
+        <div class="role-card staff">
+            <div class="role-title">📱 Conveniência Moderna</div>
+            <div>Autenticação via código QR para acesso rápido, mantendo segurança através de credenciais temporárias e registro de atividades.</div>
+        </div>
+    </div>
+</div>
+
+<div class="section">
+    <h2>📋 Especificações Técnicas</h2>
+    <div class="role-grid">
+        <div class="role-card admin">
+            <div class="role-title">🖥️ Backend & Integração</div>
+            <div>• Servidor backend em Node.js/PHP<br>
+            • Integração API Desbravador<br>
+            • Banco de dados MySQL/PostgreSQL<br>
+            • Interface web responsiva</div>
+        </div>
+        
+        <div class="role-card host">
+            <div class="role-title">🌐 Infraestrutura de Rede</div>
+            <div>• Roteador Central MikroTik<br>
+            • 6+ Pontos de Acesso distribuídos<br>
+            • Configuração CAPsMAN<br>
+            • Isolamento VLAN completo</div>
+        </div>
+        
+        <div class="role-card guest">
+            <div class="role-title">📊 Monitoramento & Logs</div>
+            <div>• Rastreamento de sessões em tempo real<br>
+            • Logs de conexão e desconexão<br>
+            • Relatórios de uso por VLAN<br>
+            • Dashboard administrativo</div>
+        </div>
+        
+        <div class="role-card staff">
+            <div class="role-title">🔒 Segurança & Compliance</div>
+            <div>• Criptografia WPA3/WPA2<br>
+            • Firewall entre VLANs<br>
+            • Registro de todas atividades<br>
+            • Políticas de acesso granulares</div>
+        </div>
+    </div>
+</div>
+
+<script>
+function toggleLanguage() {
+    // Placeholder for language toggle functionality
+    alert('Funcionalidade de idioma será implementada na versão final do sistema!');
+}
+</script>
+
+</body>
+</html>

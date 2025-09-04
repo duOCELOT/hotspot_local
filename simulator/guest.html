@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resort Fazenda 3 Pinheiros - Wi-Fi Hóspedes</title>
+    <link rel="stylesheet" href="css/guest-mobile.css">
+</head>
+<body>
+
+<!-- Login Screen -->
+<div class="container" id="loginScreen">
+    <div class="logo">
+        <img src="images/3pin.png" alt="Resort Fazenda 3 Pinheiros" class="logo-image">
+    </div>
+
+    <div class="welcome-text">
+        <h1>Bem-vindo ao Wi-Fi do Resort</h1>
+        <p>Conecte-se facilmente e acompanhe seu consumo</p>
+    </div>
+
+    <div class="login-form">
+        <div class="input-group">
+            <label for="roomField">Número do Quarto</label>
+            <input type="tel" class="input-field" id="roomField" placeholder="Ex: 105" maxlength="3">
+        </div>
+        
+        <div class="input-group">
+            <label for="idField">Código de Identificação</label>
+            <input type="text" class="input-field" id="idField" placeholder="Código do quarto">
+        </div>
+
+        <button class="connect-btn" onclick="connectGuest()">
+            <span class="btn-icon">📶</span>
+            Conectar ao Wi-Fi
+        </button>
+    </div>
+
+    <div class="help-section">
+        <p class="help-text">Não consegue conectar? Toque no pato para ajuda</p>
+    </div>
+</div>
+
+<!-- Guest Dashboard -->
+<div class="container dashboard" id="guestDashboard">
+    <div class="dashboard-header">
+        <div class="logo-small">
+            <img src="images/3pin.png" alt="3 Pinheiros" class="logo-image-small">
+        </div>
+        <div class="guest-info">
+            <h2>Quarto <span id="currentRoom">--</span></h2>
+            <p class="checkout-info">Check-out: 25/09/2025</p>
+        </div>
+        <button class="logout-btn-header" onclick="logout()">Sair</button>
+    </div>
+
+    <div class="status-cards">
+        <div class="status-card wifi">
+            <div class="status-icon">📶</div>
+            <div class="status-info">
+                <div class="status-title">Conexão Wi-Fi</div>
+                <div class="status-value connected">Conectado</div>
+            </div>
+        </div>
+        
+        <div class="status-card devices">
+            <div class="status-icon">📱</div>
+            <div class="status-info">
+                <div class="status-title">Dispositivos</div>
+                <div class="status-value">2 / 3 conectados</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="data-usage">
+        <div class="usage-header">
+            <h3>Uso de Dados</h3>
+            <span class="usage-amount">350MB / 1GB</span>
+        </div>
+        <div class="usage-bar">
+            <div class="usage-fill" style="width: 35%"></div>
+        </div>
+    </div>
+
+    <div class="connected-devices">
+        <h3>Dispositivos Conectados</h3>
+        <div class="device-list">
+            <div class="device-item">
+                <div class="device-icon">📱</div>
+                <div class="device-info">
+                    <div class="device-name">iPhone de João</div>
+                    <div class="device-time">Conectado há 2h 15m</div>
+                </div>
+                <div class="device-status active">Ativo</div>
+            </div>
+            <div class="device-item">
+                <div class="device-icon">💻</div>
+                <div class="device-info">
+                    <div class="device-name">MacBook de Maria</div>
+                    <div class="device-time">Conectado há 45m</div>
+                </div>
+                <div class="device-status active">Ativo</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="consumption-section">
+        <div class="section-header">
+            <h3>Consumo da Estadia</h3>
+            <div class="total-amount">R$ 459,00</div>
+        </div>
+        <div class="consumption-list">
+            <div class="consumption-item">
+                <div class="item-icon">💧</div>
+                <div class="item-details">
+                    <div class="item-name">Água Mineral 500ml</div>
+                    <div class="item-meta">3x • Hoje 14:30</div>
+                </div>
+                <div class="item-price">R$ 15,00</div>
+            </div>
+            <div class="consumption-item">
+                <div class="item-icon">🥤</div>
+                <div class="item-details">
+                    <div class="item-name">Refrigerante Lata</div>
+                    <div class="item-meta">2x • Hoje 16:45</div>
+                </div>
+                <div class="item-price">R$ 12,00</div>
+            </div>
+            <div class="consumption-item">
+                <div class="item-icon">🐎</div>
+                <div class="item-details">
+                    <div class="item-name">Passeio a Cavalo</div>
+                    <div class="item-meta">2x • Hoje 09:00</div>
+                </div>
+                <div class="item-price">R$ 120,00</div>
+            </div>
+            <div class="consumption-item">
+                <div class="item-icon">🍺</div>
+                <div class="item-details">
+                    <div class="item-name">Cerveja Long Neck</div>
+                    <div class="item-meta">4x • Ontem 19:20</div>
+                </div>
+                <div class="item-price">R$ 32,00</div>
+            </div>
+            <div class="consumption-item">
+                <div class="item-icon">🍽️</div>
+                <div class="item-details">
+                    <div class="item-name">Jantar Restaurante</div>
+                    <div class="item-meta">2x • Ontem 20:00</div>
+                </div>
+                <div class="item-price">R$ 85,00</div>
+            </div>
+            <div class="consumption-item">
+                <div class="item-icon">🍸</div>
+                <div class="item-details">
+                    <div class="item-name">Drinks no Bar</div>
+                    <div class="item-meta">6x • Ontem 21:30</div>
+                </div>
+                <div class="item-price">R$ 90,00</div>
+            </div>
+        </div>
+        <button class="view-full-bill" onclick="showFullBill()">
+            Ver Conta Completa
+        </button>
+    </div>
+</div>
+
+<!-- Avatar -->
+<div class="avatar-container">
+    <button class="avatar-toggle" onclick="toggleAvatar()" id="avatarToggle">🦆</button>
+    <div class="avatar" id="avatar" onclick="avatarClick()">
+        <img src="images/char.png" alt="Avatar do Resort">
+        <div class="avatar-tooltip">Olá! Precisa de ajuda?</div>
+    </div>
+</div>
+
+<script src="js/guest-mobile.js"></script>
+</body>
+</html>

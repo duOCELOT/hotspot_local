@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resort Fazenda 3 Pinheiros - Wi-Fi</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- Login Screen -->
+<div class="container" id="loginScreen">
+    <div class="logo">
+        <img src="images/3pin.png" alt="Resort Fazenda 3 Pinheiros" class="logo-image">
+    </div>
+
+    <div class="lang-selector">
+        <a href="#" class="lang-link">Português</a> - 
+        <a href="#" class="lang-link active">English</a> - 
+        <a href="#" class="lang-link">Español</a>
+    </div>
+
+    <h1>Por favor, selecione seu tipo de acesso</h1>
+
+    <!-- Login Fields Always Visible -->
+    <div class="login-fields">
+        <input type="text" class="input-field" id="field1" placeholder="Número do Quarto / Código">
+        <input type="text" class="input-field" id="field2" placeholder="Identificação / Senha">
+    </div>
+
+    <div class="access-types">
+        <div class="access-type" onclick="signIn('guest')">Hóspede</div>
+        <div class="access-type" onclick="signIn('event')">Evento</div>
+        <div class="access-type" onclick="signIn('visitor')">Visitante</div>
+        <div class="access-type" onclick="signIn('administrator')">Administrador</div>
+        <div class="access-type" onclick="signIn('receptionist')">Recepcionista</div>
+    </div>
+
+    <div class="terms">
+        Ao continuar, você concorda com nossos <a href="#">termos de uso</a>
+    </div>
+</div>
+
+<!-- Guest Dashboard -->
+<div class="container dashboard" id="guestDashboard">
+    <button class="back-btn" onclick="logout()">← Voltar</button>
+    <div class="dashboard-header">
+        <div class="logo">
+            <img src="3pin.png" alt="3 Pinheiros" class="logo-image-small">
+        </div>
+    </div>
+
+    <div class="user-info">
+        <h2>Bem-vindo, Hóspede!</h2>
+        <p>Quarto: <span id="currentRoom">--</span></p>
+        <p>Check-out: 25/09/2025</p>
+    </div>
+
+    <div class="device-list">
+        <h3>Dispositivos Conectados (2/3)</h3>
+        <div class="device-item">
+            <div>
+                <div>📱 iPhone de João</div>
+                <div style="font-size: 12px; color: #aaa;">Conectado há 2h 15m</div>
+            </div>
+            <div class="device-status status-connected">Conectado</div>
+        </div>
+        <div class="device-item">
+            <div>
+                <div>💻 MacBook de Maria</div>
+                <div style="font-size: 12px; color: #aaa;">Conectado há 45m</div>
+            </div>
+            <div class="device-status status-connected">Conectado</div>
+        </div>
+    </div>
+
+    <div class="usage-bar">
+        <div class="usage-fill" style="width: 35%"></div>
+    </div>
+    <div style="text-align: center; font-size: 12px; color: #aaa; margin-bottom: 20px;">
+        Uso de dados: 350MB de 1GB disponível
+    </div>
+
+    <div class="account-details">
+        <h3>Consumo da Estadia</h3>
+        <div class="consumption-scroll">
+            <div class="consumption-item-list">
+                <div class="consumption-row">
+                    <div class="item-info">
+                        <div class="item-icon">💧</div>
+                        <div class="item-details">
+                            <div class="item-name">Água Mineral 500ml</div>
+                            <div class="item-date">Hoje - 14:30</div>
+                        </div>
+                    </div>
+                    <div class="item-qty">3x</div>
+                    <div class="item-value">R$ 15,00</div>
+                </div>
+                <div class="consumption-row">
+                    <div class="item-info">
+                        <div class="item-icon">🥤</div>
+                        <div class="item-details">
+                            <div class="item-name">Refrigerante Lata</div>
+                            <div class="item-date">Hoje - 16:45</div>
+                        </div>
+                    </div>
+                    <div class="item-qty">2x</div>
+                    <div class="item-value">R$ 12,00</div>
+                </div>
+                <div class="consumption-row">
+                    <div class="item-info">
+                        <div class="item-icon">🐎</div>
+                        <div class="item-details">
+                            <div class="item-name">Passeio a Cavalo</div>
+                            <div class="item-date">Hoje - 09:00</div>
+                        </div>
+                    </div>
+                    <div class="item-qty">2x</div>
+                    <div class="item-value">R$ 120,00</div>
+                </div>
+                <div class="consumption-row">
+                    <div class="item-info">
+                        <div class="item-icon">🍺</div>
+                        <div class="item-details">
+                            <div class="item-name">Cerveja Long Neck</div>
+                            <div class="item-date">Ontem - 19:20</div>
+                        </div>
+                    </div>
+                    <div class="item-qty">4x</div>
+                    <div class="item-value">R$ 32,00</div>
+                </div>
+                <div class="consumption-row">
+                    <div class="item-info">
+                        <div class="item-icon">🍽️</div>
+                        <div class="item-details">
+                            <div class="item-name">Jantar Restaurante</div>
+                            <div class="item-date">Ontem - 20:00</div>
+                        </div>
+                    </div>
+                    <div class="item-qty">2x</div>
+                    <div class="item-value">R$ 85,00</div>
+                </div>
+                <div class="consumption-row">
+                    <div class="item-info">
+                        <div class="item-icon">🍸</div>
+                        <div class="item-details">
+                            <div class="item-name">Drinks no Bar</div>
+                            <div class="item-date">Ontem - 21:30</div>
+                        </div>
+                    </div>
+                    <div class="item-qty">6x</div>
+                    <div class="item-value">R$ 90,00</div>
+                </div>
+                <div class="consumption-row">
+                    <div class="item-info">
+                        <div class="item-icon">🧴</div>
+                        <div class="item-details">
+                            <div class="item-name">Amenities Spa</div>
+                            <div class="item-date">22/09 - 15:00</div>
+                        </div>
+                    </div>
+                    <div class="item-qty">1x</div>
+                    <div class="item-value">R$ 45,00</div>
+                </div>
+                <div class="consumption-row">
+                    <div class="item-info">
+                        <div class="item-icon">🏊</div>
+                        <div class="item-details">
+                            <div class="item-name">Aula de Natação</div>
+                            <div class="item-date">22/09 - 10:00</div>
+                        </div>
+                    </div>
+                    <div class="item-qty">1x</div>
+                    <div class="item-value">R$ 60,00</div>
+                </div>
+            </div>
+        </div>
+        <div class="consumption-summary">
+            <div class="subtotal-row">
+                <span>Subtotal:</span>
+                <span>R$ 459,00</span>
+            </div>
+        </div>
+    </div>
+
+    <button class="logout-btn" onclick="logout()">Sair</button>
+</div>
+
+<!-- Event Dashboard -->
+<div class="container dashboard" id="eventDashboard">
+    <button class="back-btn" onclick="logout()">← Voltar</button>
+    <div class="dashboard-header">
+        <div class="logo">
+            <img src="images/3pin.png" alt="3 Pinheiros" class="logo-image-small">
+        </div>
+    </div>
+
+    <div class="user-info">
+        <h2>Acesso para Eventos</h2>
+        <p>Participante: <span id="eventParticipant">--</span></p>
+        <p>Válido até: 20:00 hoje</p>
+    </div>
+
+    <div class="event-info">
+        <h3>🎉 Evento: Conferência Agronegócio 2025</h3>
+        <p>Local: Auditório Principal</p>
+        <p>Horário: 14:00 - 18:00</p>
+    </div>
+
+    <div class="device-list">
+        <h3>Dispositivo Conectado (1/2)</h3>
+        <div class="device-item">
+            <div>
+                <div>📱 Dispositivo Móvel</div>
+                <div style="font-size: 12px; color: #aaa;">Conectado há 1h 22m</div>
+            </div>
+            <div class="device-status status-limited">Limitado</div>
+        </div>
+    </div>
+
+    <button class="logout-btn" onclick="logout()">Sair</button>
+</div>
+
+<!-- Visitor Dashboard -->
+<div class="container dashboard" id="visitorDashboard">
+    <button class="back-btn" onclick="logout()">← Voltar</button>
+    <div class="dashboard-header">
+        <div class="logo">
+            <img src="images/3pin.png" alt="3 Pinheiros" class="logo-image-small">
+        </div>
+    </div>
+
+    <div class="user-info">
+        <h2>Visitante</h2>
+        <p>Nome: <span id="visitorCurrentName">--</span></p>
+        <p>Acesso válido: 2 horas</p>
+    </div>
+
+    <div style="background: #444; padding: 15px; border-radius: 6px; margin: 15px 0; text-align: center;">
+        <p style="font-size: 14px; color: #aaa;">
+            ⚠️ Acesso limitado para visitantes<br>
+            Entre em contato com a recepção para extensão
+        </p>
+    </div>
+
+    <button class="logout-btn" onclick="logout()">Sair</button>
+</div>
+
+<!-- Administrator Dashboard -->
+<div class="container dashboard" id="administratorDashboard" style="max-width: 600px;">
+    <button class="back-btn" onclick="logout()">← Voltar</button>
+    <div class="dashboard-header">
+        <div class="logo">
+            <img src="images/3pin.png" alt="Painel Admin" class="logo-image-small">
+        </div>
+    </div>
+
+    <div class="user-info">
+        <h2>🛠️ Administrador Sistema</h2>
+        <p>Usuário: <span id="adminCurrentUser">admin</span></p>
+        <p>Último acesso: Hoje às 08:30</p>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-number">156</div>
+            <div class="stat-label">Usuários Conectados</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">78%</div>
+            <div class="stat-label">Ocupação Rede</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">23</div>
+            <div class="stat-label">APs Ativos</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">2.1GB</div>
+            <div class="stat-label">Tráfego Hoje</div>
+        </div>
+    </div>
+
+    <div class="admin-controls">
+        <div class="control-btn" onclick="alert('Gerenciar Usuários')">👥 Usuários</div>
+        <div class="control-btn" onclick="alert('Configurar Rede')">🌐 Rede</div>
+        <div class="control-btn" onclick="alert('Visualizar Logs')">📊 Logs</div>
+        <div class="control-btn" onclick="alert('Configurações')">⚙️ Config</div>
+    </div>
+
+    <button class="logout-btn" onclick="logout()">Sair</button>
+</div>
+
+<!-- Receptionist Dashboard -->
+<div class="container dashboard" id="receptionistDashboard">
+    <button class="back-btn" onclick="logout()">← Voltar</button>
+    <div class="dashboard-header">
+        <div class="logo">
+            <img src="images/3pin.png" alt="Recepção" class="logo-image-small">
+        </div>
+    </div>
+
+    <div class="user-info">
+        <h2>🏨 Recepcionista</h2>
+        <p>Usuário: <span id="receptionCurrentUser">recepcao01</span></p>
+        <p>Turno: Manhã (06:00-14:00)</p>
+    </div>
+
+    <div class="admin-controls">
+        <div class="control-btn" onclick="alert('Criar Acesso Hóspede')">➕ Criar Acesso</div>
+        <div class="control-btn" onclick="alert('Suporte Técnico')">🔧 Suporte</div>
+    </div>
+
+    <button class="logout-btn" onclick="logout()">Sair</button>
+</div>
+
+<!-- Avatar Container -->
+<div class="avatar-container">
+    <button class="avatar-toggle" onclick="toggleAvatar()" id="avatarToggle">🦆</button>
+    <div class="avatar" id="avatar" onclick="avatarClick()">
+        <img src="images/char.png" alt="Avatar do Resort">
+        <div class="avatar-tooltip">Olá! Precisa de ajuda?</div>
+    </div>
+</div>
+
+<script src="js/script.js"></script>
+</body>
+</html>
