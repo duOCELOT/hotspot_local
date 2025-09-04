@@ -83,20 +83,220 @@ Este projeto implementa uma solução robusta de Wi-Fi para hotéis com 80 apart
 
 ```
 hotel-wifi-system/
-├── README.md                     # Este arquivo
-├── index.html                    # Apresentação do projeto
-└── simulator/                    # Simuladores funcionais
-    ├── guest.html               # Interface mobile (hóspedes)
-    ├── admin.html               # Interface desktop (administração)
-    ├── css/
-    │   ├── guest-mobile.css     # Estilos otimizados mobile
-    │   └── admin-desktop.css    # Estilos dashboard administrativo
-    ├── js/
-    │   ├── guest-mobile.js      # JavaScript mobile otimizado
-    │   └── admin-desktop.js     # JavaScript para administração
-    └── images/
-        ├── 3pin.png            # Logo do resort
-        └── char.png            # Avatar do assistente
+│
+├── README.md                           # Documentação principal
+├── .env.example                        # Variáveis de ambiente exemplo
+├── .gitignore                          # Arquivos ignorados pelo Git
+├── docker-compose.yml                  # Containerização completa
+├── package.json                        # Dependências Node.js
+│
+├── frontend/                           # Interface do usuário
+│   ├── public/
+│   │   ├── index.html                  # Apresentação do projeto
+│   │   ├── favicon.ico
+│   │   └── images/
+│   │       ├── 3pin.png               # Logo do resort
+│   │       └── char.png               # Avatar assistente
+│   │
+│   ├── src/
+│   │   ├── pages/
+│   │   │   ├── guest/
+│   │   │   │   ├── guest.html         # Interface mobile hóspedes
+│   │   │   │   ├── guest.css          # Estilos mobile
+│   │   │   │   └── guest.js           # JavaScript mobile
+│   │   │   │
+│   │   │   └── admin/
+│   │   │       ├── admin.html         # Interface desktop admin
+│   │   │       ├── admin.css          # Estilos desktop
+│   │   │       └── admin.js           # JavaScript admin
+│   │   │
+│   │   ├── components/
+│   │   │   ├── avatar/
+│   │   │   │   ├── avatar.css
+│   │   │   │   └── avatar.js
+│   │   │   │
+│   │   │   └── modals/
+│   │   │       ├── qr-modal.css
+│   │   │       └── qr-modal.js
+│   │   │
+│   │   └── utils/
+│   │       ├── api.js                 # Cliente API
+│   │       ├── auth.js                # Autenticação frontend
+│   │       └── constants.js           # Constantes globais
+│   │
+│   └── dist/                          # Build de produção
+│
+├── backend/                           # Servidor API
+│   ├── src/
+│   │   ├── controllers/
+│   │   │   ├── auth.controller.js     # Autenticação
+│   │   │   ├── guest.controller.js    # Gestão hóspedes
+│   │   │   ├── admin.controller.js    # Administração
+│   │   │   ├── network.controller.js  # Controle rede
+│   │   │   └── stats.controller.js    # Estatísticas
+│   │   │
+│   │   ├── services/
+│   │   │   ├── mikrotik.service.js    # Integração MikroTik
+│   │   │   ├── desbravador.service.js # API Desbravador
+│   │   │   ├── user.service.js        # Gestão usuários
+│   │   │   ├── vlan.service.js        # Gestão VLANs
+│   │   │   └── ap.service.js          # Access Points
+│   │   │
+│   │   ├── models/
+│   │   │   ├── User.js                # Modelo usuário
+│   │   │   ├── Guest.js               # Modelo hóspede
+│   │   │   ├── Session.js             # Sessão ativa
+│   │   │   ├── AccessPoint.js         # Access Point
+│   │   │   └── Log.js                 # Logs sistema
+│   │   │
+│   │   ├── middleware/
+│   │   │   ├── auth.middleware.js     # Autenticação JWT
+│   │   │   ├── role.middleware.js     # Controle acesso
+│   │   │   ├── rate-limit.middleware.js # Rate limiting
+│   │   │   └── logging.middleware.js  # Logs requisições
+│   │   │
+│   │   ├── routes/
+│   │   │   ├── auth.routes.js         # Rotas autenticação
+│   │   │   ├── guest.routes.js        # Rotas hóspedes
+│   │   │   ├── admin.routes.js        # Rotas admin
+│   │   │   ├── network.routes.js      # Rotas rede
+│   │   │   └── stats.routes.js        # Rotas estatísticas
+│   │   │
+│   │   ├── config/
+│   │   │   ├── database.js            # Configuração BD
+│   │   │   ├── mikrotik.js            # Config MikroTik
+│   │   │   ├── redis.js               # Config Redis
+│   │   │   └── app.js                 # Config aplicação
+│   │   │
+│   │   ├── utils/
+│   │   │   ├── logger.js              # Sistema logging
+│   │   │   ├── encryption.js          # Criptografia
+│   │   │   ├── validation.js          # Validação dados
+│   │   │   └── qr-generator.js        # Geração QR codes
+│   │   │
+│   │   └── app.js                     # Entrada aplicação
+│   │
+│   ├── tests/                         # Testes automatizados
+│   │   ├── unit/
+│   │   │   ├── controllers/
+│   │   │   ├── services/
+│   │   │   └── utils/
+│   │   │
+│   │   ├── integration/
+│   │   │   ├── auth.test.js
+│   │   │   ├── mikrotik.test.js
+│   │   │   └── api.test.js
+│   │   │
+│   │   └── fixtures/
+│   │       ├── users.json
+│   │       └── sessions.json
+│   │
+│   └── docs/                          # Documentação API
+│       ├── swagger.yml                # Especificação OpenAPI
+│       ├── postman-collection.json    # Coleção Postman
+│       └── api-docs.md                # Documentação detalhada
+│
+├── database/                          # Scripts banco de dados
+│   ├── migrations/
+│   │   ├── 001_create_users_table.sql
+│   │   ├── 002_create_guests_table.sql
+│   │   ├── 003_create_sessions_table.sql
+│   │   ├── 004_create_access_points_table.sql
+│   │   └── 005_create_logs_table.sql
+│   │
+│   ├── seeds/
+│   │   ├── admin_users.sql            # Usuários admin padrão
+│   │   ├── access_points.sql          # 40 APs configurados
+│   │   └── test_data.sql              # Dados de teste
+│   │
+│   ├── procedures/
+│   │   ├── guest_cleanup.sql          # Limpeza automática
+│   │   ├── session_management.sql     # Gestão sessões
+│   │   └── statistics.sql             # Procedures estatísticas
+│   │
+│   └── schema.sql                     # Schema completo
+│
+├── mikrotik/                          # Configurações MikroTik
+│   ├── scripts/
+│   │   ├── initial_setup.rsc          # Setup inicial
+│   │   ├── vlan_config.rsc            # Configuração VLANs
+│   │   ├── capsman_config.rsc         # Configuração CAPsMAN
+│   │   ├── hotspot_config.rsc         # Configuração Hotspot
+│   │   └── firewall_rules.rsc         # Regras firewall
+│   │
+│   ├── templates/
+│   │   ├── login_page.html            # Template login hotspot
+│   │   ├── status_page.html           # Status página
+│   │   └── logout_page.html           # Página logout
+│   │
+│   └── monitoring/
+│       ├── snmp_monitoring.rsc        # Monitoramento SNMP
+│       └── log_export.rsc             # Export logs
+│
+├── infrastructure/                    # DevOps e infraestrutura
+│   ├── nginx/
+│   │   ├── nginx.conf                 # Configuração Nginx
+│   │   └── ssl/
+│   │       ├── cert.pem
+│   │       └── key.pem
+│   │
+│   ├── docker/
+│   │   ├── backend.Dockerfile         # Container backend
+│   │   ├── frontend.Dockerfile        # Container frontend
+│   │   └── nginx.Dockerfile           # Container proxy
+│   │
+│   ├── monitoring/
+│   │   ├── prometheus/
+│   │   │   ├── prometheus.yml
+│   │   │   └── rules.yml
+│   │   │
+│   │   ├── grafana/
+│   │   │   ├── dashboards/
+│   │   │   │   ├── network_overview.json
+│   │   │   │   ├── user_statistics.json
+│   │   │   │   └── ap_monitoring.json
+│   │   │   │
+│   │   │   └── datasources/
+│   │   │       └── prometheus.yml
+│   │   │
+│   │   └── alertmanager/
+│   │       └── config.yml
+│   │
+│   └── backup/
+│       ├── backup_script.sh           # Script backup
+│       ├── restore_script.sh          # Script restore
+│       └── scheduled_backup.cron      # Agendamento backup
+│
+├── scripts/                           # Scripts utilitários
+│   ├── deploy.sh                      # Script deployment
+│   ├── setup.sh                       # Setup inicial
+│   ├── migrate.sh                     # Migração BD
+│   ├── seed.sh                        # Popular dados
+│   ├── backup.sh                      # Backup sistema
+│   ├── monitor.sh                     # Monitoramento
+│   └── cleanup.sh                     # Limpeza logs antigos
+│
+├── config/                            # Configurações ambiente
+│   ├── development.env                # Ambiente desenvolvimento
+│   ├── production.env                 # Ambiente produção
+│   ├── test.env                       # Ambiente testes
+│   └── local.env                      # Configuração local
+│
+├── logs/                              # Logs sistema
+│   ├── access.log                     # Logs acesso
+│   ├── error.log                      # Logs erros
+│   ├── mikrotik.log                   # Logs MikroTik
+│   └── application.log                # Logs aplicação
+│
+└── docs/                              # Documentação técnica
+    ├── architecture.md                # Arquitetura sistema
+    ├── installation.md                # Guia instalação
+    ├── configuration.md               # Configuração detalhada
+    ├── api-reference.md               # Referência API
+    ├── troubleshooting.md             # Solução problemas
+    ├── security.md                    # Considerações segurança
+    ├── performance.md                 # Otimização performance
+    └── changelog.md                   # Histórico mudanças
 ```
 
 ## Simuladores
